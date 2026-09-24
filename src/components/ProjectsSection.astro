@@ -1,0 +1,80 @@
+---
+import { siteData } from '../data/site.ts';
+import SectionHeading from './SectionHeading.astro';
+import ProjectCard from './ProjectCard.astro';
+
+import wildSoulImg from '../assets/projects/wild-soul.jpg';
+import plantaImg from '../assets/projects/planta.jpg';
+import moveFreelyImg from '../assets/projects/move-freely.jpg';
+
+const projectImages = [wildSoulImg, plantaImg, moveFreelyImg];
+---
+
+<section id="work" class="projects-section" aria-labelledby="work-heading">
+  <div class="site-container">
+    <SectionHeading title="SELECTED PROJECTS" id="work-heading" />
+
+    <div class="projects-grid">
+      {siteData.projects.map((proj, idx) => (
+        <ProjectCard 
+          title={proj.title}
+          tag={proj.tag}
+          href={proj.href}
+          image={projectImages[idx]}
+          alt={proj.alt}
+          index={idx}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects-section {
+    background: var(--grad-page);
+    padding-block: clamp(32px, 4vw, 64px);
+    scroll-margin-top: 40px;
+    position: relative;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.4%;
+  }
+
+  @media (max-width: 899px) {
+    .projects-grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 16px;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+      margin-inline: calc(-1 * clamp(16px, 3vw, 44px));
+      padding-inline: clamp(16px, 3vw, 44px);
+      scrollbar-width: thin;
+      scrollbar-color: rgba(245, 133, 90, 0.3) transparent;
+    }
+
+    .projects-grid::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .projects-grid::-webkit-scrollbar-thumb {
+      background: rgba(245, 133, 90, 0.3);
+      border-radius: 4px;
+    }
+
+    .projects-grid > :global(.project-card) {
+      flex: 0 0 78%;
+      scroll-snap-align: center;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .projects-grid > :global(.project-card) {
+      flex: 0 0 85%;
+    }
+  }
+</style>

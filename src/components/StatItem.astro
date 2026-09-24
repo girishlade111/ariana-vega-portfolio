@@ -1,0 +1,75 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  value: string;
+  label: string;
+  icon: 'layers' | 'heart' | 'globe';
+  showDivider?: boolean;
+}
+
+const { value, label, icon, showDivider = true } = Astro.props;
+const labelLines = label.split('\n');
+---
+
+<div class="stat-item">
+  <div class="stat-icon-wrapper">
+    <Icon name={icon} size={24} color="var(--coral-500)" />
+  </div>
+  <div class="stat-value">{value}</div>
+  <div class="stat-label">
+    {labelLines.map(line => (
+      <span>{line}</span>
+    ))}
+  </div>
+  {showDivider && <div class="stat-divider" aria-hidden="true"></div>}
+</div>
+
+<style>
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding-inline: clamp(6px, 1vw, 14px);
+    flex: 1;
+  }
+
+  .stat-icon-wrapper {
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .stat-value {
+    font-family: var(--font-sans);
+    font-size: var(--fs-stat);
+    font-weight: 600;
+    color: var(--orange-400);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-family: var(--font-sans);
+    font-size: clamp(10px, 0.75vw, 11px);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--cream-muted);
+    line-height: 1.25;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-divider {
+    position: absolute;
+    right: 0;
+    top: 15%;
+    bottom: 15%;
+    width: 1px;
+    background: rgba(245, 133, 90, 0.35);
+  }
+</style>

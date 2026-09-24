@@ -1,0 +1,75 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Ariana Vega — UI/UX Designer & Digital Storyteller',
+  description = 'Portfolio of Ariana Vega, a UI/UX designer and digital storyteller crafting beautiful, intuitive digital experiences with purpose and impact.'
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://arianavega.design');
+const ogImageURL = new URL('/og.jpg', Astro.site || 'https://arianavega.design');
+
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  'name': 'Ariana Vega',
+  'jobTitle': 'UI/UX Designer & Digital Storyteller',
+  'url': 'https://arianavega.design',
+  'sameAs': [
+    'https://instagram.com/arianavega.design'
+  ],
+  'address': {
+    '@type': 'PostalAddress',
+    'addressLocality': 'Los Angeles',
+    'addressRegion': 'CA'
+  }
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="theme-color" content="#1B0C22" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImageURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <slot />
+
+    <!-- Pure tiny vanilla TS scroll reveal & light parallax (< 1KB gzipped) -->
+    <script>
+      import { initInteractions } from '../scripts/reveal.ts';
+      initInteractions();
+    </script>
+  </body>
+</html>

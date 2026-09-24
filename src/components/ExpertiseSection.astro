@@ -1,0 +1,78 @@
+---
+import { siteData } from '../data/site.ts';
+import SectionHeading from './SectionHeading.astro';
+import ExpertiseTile from './ExpertiseTile.astro';
+---
+
+<section id="expertise" class="expertise-section" aria-labelledby="expertise-heading">
+  <div class="site-container">
+    <SectionHeading title="MY EXPERTISE" id="expertise-heading" />
+
+    <div class="expertise-outer-frame">
+      <div class="expertise-grid">
+        {siteData.expertise.map((item, idx) => (
+          <ExpertiseTile 
+            title={item.title}
+            description={item.description}
+            icon={item.icon}
+            index={idx}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .expertise-section {
+    padding-block: clamp(32px, 4vw, 64px);
+    scroll-margin-top: 40px;
+    position: relative;
+  }
+
+  .expertise-outer-frame {
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    padding: 3%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 80%);
+  }
+
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2%;
+  }
+
+  @media (max-width: 899px) {
+    .expertise-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .expertise-grid > :global(:nth-child(4)) {
+      grid-column: 1 / 2;
+    }
+
+    .expertise-grid > :global(:nth-child(5)) {
+      grid-column: 2 / 3;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .expertise-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .expertise-grid > :global(:nth-child(4)) {
+      grid-column: auto;
+    }
+
+    .expertise-grid > :global(:nth-child(5)) {
+      grid-column: 1 / -1;
+      max-width: 240px;
+      margin-inline: auto;
+      width: 100%;
+    }
+  }
+</style>

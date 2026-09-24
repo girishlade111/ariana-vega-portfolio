@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+import ExpertiseSection from '../components/ExpertiseSection.astro';
+import AboutSection from '../components/AboutSection.astro';
+import CtaFooter from '../components/CtaFooter.astro';
+---
+
+<BaseLayout>
+  <main id="main">
+    <!-- 1. Hero Section -->
+    <Hero />
+
+    <!-- 2. Selected Projects Section -->
+    <ProjectsSection />
+
+    <!-- 3. My Expertise Section -->
+    <ExpertiseSection />
+
+    <!-- 4. About Me Section -->
+    <AboutSection />
+  </main>
+
+  <!-- 5. CTA Footer Section -->
+  <CtaFooter />
+</BaseLayout>

@@ -1,0 +1,577 @@
+---
+import { Image } from 'astro:assets';
+import { siteData } from '../data/site.ts';
+import Sparkle from './Sparkle.astro';
+import RotatingBadge from './RotatingBadge.astro';
+import Icon from './Icon.astro';
+
+import heroSubjectImg from '../assets/hero/hero-subject.png';
+import palmTlImg from '../assets/hero/palm-tl.svg';
+import palmRImg from '../assets/hero/palm-r.svg';
+---
+
+<section id="hero" class="hero-section" aria-label="Introduction">
+  <!-- 1. Background gradient & film grain overlay -->
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+
+  <!-- 2. SUN -->
+  <div class="hero-sun" aria-hidden="true"></div>
+
+  <!-- 3. OCEAN (bottom-left) -->
+  <div class="hero-ocean" aria-hidden="true">
+    <div class="ocean-horizon-glow"></div>
+    <div class="ocean-waves"></div>
+  </div>
+
+  <!-- 4. Land & Palm Silhouettes -->
+  <div class="hero-land-br" aria-hidden="true"></div>
+  <div class="hero-palm-tl" aria-hidden="true">
+    <img src={palmTlImg.src} alt="" width="380" height="380" />
+  </div>
+
+  <!-- 5. TYPE LAYER (Behind Subject) -->
+  <div class="hero-type-layer">
+    <h1 class="hero-h1">
+      <span class="type-hello">HELLO,</span>
+      <span class="type-im-group">
+        <span class="type-im">I'M</span>
+        <Sparkle size={18} color="var(--orange-500)" class="type-sparkle" />
+      </span>
+      <span class="type-ariana">ARIANA</span>
+      <span class="type-vega">Vega</span>
+    </h1>
+  </div>
+
+  <!-- 6. SUBJECT (Eager loading, high fetchpriority) -->
+  <div class="hero-subject-wrapper">
+    <Image 
+      src={heroSubjectImg} 
+      alt="Ariana Vega looking over her shoulder with sunset sunglasses" 
+      width={1600} 
+      height={2000} 
+      loading="eager" 
+      fetchpriority="high"
+      class="hero-subject-img"
+    />
+  </div>
+
+  <!-- 8. Right Palm Fronds (Over sun & hair edge) -->
+  <div class="hero-palm-r" aria-hidden="true">
+    <img src={palmRImg.src} alt="" width="320" height="420" />
+  </div>
+
+  <!-- 9. HAND NOTE (Above subject waist) -->
+  <div class="hero-hand-note" aria-hidden="true">
+    <span>{siteData.handNoteLines[0]}</span>
+    <span>{siteData.handNoteLines[1]}</span>
+    <span>{siteData.handNoteLines[2]}</span>
+  </div>
+
+  <!-- 10. ROTATING BADGE (Top Right) -->
+  <div class="hero-badge-positioner">
+    <RotatingBadge 
+      text={siteData.heroBadgeText} 
+      duration={30} 
+      centerIcon="sun-center" 
+      size="clamp(80px, 10.5vw, 150px)"
+      id="hero-badge"
+    />
+  </div>
+
+  <!-- 6. LEFT INFO BLOCK (Over Ocean) -->
+  <div class="hero-info-block">
+    <div class="hero-role-label">
+      <span>UI/UX DESIGNER &amp;</span>
+      <span>DIGITAL STORYTELLER</span>
+    </div>
+    <p class="hero-description">
+      {siteData.heroText}
+    </p>
+    <a href={siteData.heroCtaHref} class="hero-cta-btn">
+      <span>{siteData.heroCta}</span>
+      <span class="btn-icon-circle">
+        <Icon name="arrow-up-right" size={14} color="#FFF" />
+      </span>
+    </a>
+  </div>
+
+  <!-- Bottom Divider Line -->
+  <div class="hero-bottom-line" aria-hidden="true"></div>
+</section>
+
+<style>
+  .hero-section {
+    position: relative;
+    width: 100%;
+    min-height: clamp(560px, 62.5vw, 940px);
+    overflow: hidden;
+    background: var(--grad-hero);
+  }
+
+  /* 1. Grain overlay */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--grad-hero);
+    z-index: 1;
+  }
+
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    opacity: 0.12;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  /* 2. SUN */
+  .hero-sun {
+    position: absolute;
+    top: 47%;
+    left: 87%;
+    transform: translate(-50%, -50%);
+    width: clamp(280px, 41vw, 600px);
+    height: clamp(280px, 41vw, 600px);
+    border-radius: 50%;
+    background: radial-gradient(circle at 45% 45%, var(--peach-200) 0%, var(--orange-400) 45%, rgba(242, 107, 58, 0) 70%);
+    box-shadow: 0 0 120px rgba(255, 190, 120, 0.55);
+    z-index: 3;
+    pointer-events: none;
+    animation: sunFloat 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes sunFloat {
+    0% {
+      transform: translate(-50%, calc(-50% - 6px));
+    }
+    100% {
+      transform: translate(-50%, calc(-50% + 6px));
+    }
+  }
+
+  /* 3. OCEAN */
+  .hero-ocean {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 62%;
+    height: 28%;
+    background: linear-gradient(180deg, rgba(230, 80, 80, 0.7) 0%, #301138 90%);
+    z-index: 4;
+    mask-image: linear-gradient(to right, black 65%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 15%);
+    -webkit-mask-image: linear-gradient(to right, black 65%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 15%);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+    pointer-events: none;
+  }
+
+  .ocean-waves {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08) 0px,
+      rgba(255, 255, 255, 0.08) 2px,
+      transparent 2px,
+      transparent 8px
+    );
+    opacity: 0.25;
+  }
+
+  .ocean-horizon-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: linear-gradient(180deg, rgba(255, 211, 161, 0.6) 0%, transparent 100%);
+  }
+
+  /* 4. Land & Palms */
+  .hero-land-br {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 25%;
+    height: 9%;
+    background: var(--plum-950);
+    border-top-left-radius: 90% 100%;
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  .hero-palm-tl {
+    position: absolute;
+    top: -2%;
+    left: -2%;
+    width: clamp(140px, 22vw, 320px);
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0.95;
+  }
+
+  .hero-palm-tl img {
+    width: 100%;
+    height: auto;
+  }
+
+  /* 5. TYPE LAYER (Behind Subject) */
+  .hero-type-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .hero-h1 {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
+
+  .type-hello {
+    position: absolute;
+    left: 11.5%;
+    top: 13.5%;
+    font-family: var(--font-serif);
+    font-size: var(--fs-hello);
+    font-weight: 700;
+    color: var(--ink-plum);
+    letter-spacing: 0.04em;
+    line-height: 0.85;
+    animation: fadeInHello 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .type-im-group {
+    position: absolute;
+    left: clamp(38%, 42vw, 47%);
+    top: 16%;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeInHello 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+    opacity: 0;
+  }
+
+  .type-im {
+    font-family: var(--font-sans);
+    font-size: clamp(0.9rem, 1.4vw, 1.6rem);
+    font-weight: 600;
+    color: var(--ink-plum);
+    letter-spacing: 0.25em;
+  }
+
+  .type-ariana {
+    position: absolute;
+    left: 5%;
+    top: 27%;
+    width: 48%;
+    font-family: var(--font-serif);
+    font-size: var(--fs-ariana);
+    font-weight: 700;
+    color: var(--coral-500);
+    letter-spacing: -0.01em;
+    line-height: 0.8;
+    transform: scaleY(1.3);
+    transform-origin: left bottom;
+    text-transform: uppercase;
+    animation: fadeInAriana 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.12s forwards;
+    opacity: 0;
+  }
+
+  .type-vega {
+    position: absolute;
+    left: 22%;
+    top: 47%;
+    font-family: var(--font-script);
+    font-size: var(--fs-vega);
+    color: var(--gold-300);
+    line-height: 0.9;
+    transform: rotate(-7deg);
+    text-shadow: 0 0 25px rgba(255, 170, 80, 0.45);
+    z-index: 6;
+    clip-path: inset(0 100% 0 0);
+    animation: revealVega 0.95s cubic-bezier(0.2, 0.8, 0.2, 1) 0.35s forwards;
+  }
+
+  @keyframes fadeInHello {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInAriana {
+    from {
+      opacity: 0;
+      transform: scaleY(1.3) translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: scaleY(1.3) translateY(0);
+    }
+  }
+
+  @keyframes revealVega {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0% 0 0);
+    }
+  }
+
+  /* 7. SUBJECT */
+  .hero-subject-wrapper {
+    position: absolute;
+    right: 7%;
+    bottom: 0;
+    width: clamp(340px, 46vw, 680px);
+    height: 100%;
+    z-index: 7;
+    pointer-events: none;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    animation: subjectEntry 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+    opacity: 0;
+  }
+
+  .hero-subject-img {
+    height: 100%;
+    width: auto;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: bottom right;
+    filter: drop-shadow(0 0 45px rgba(255, 140, 80, 0.28));
+  }
+
+  @keyframes subjectEntry {
+    from {
+      opacity: 0;
+      transform: scale(1.04);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* 8. Right Palm Fronds */
+  .hero-palm-r {
+    position: absolute;
+    right: -2%;
+    top: 36%;
+    width: clamp(140px, 19vw, 290px);
+    z-index: 8;
+    pointer-events: none;
+  }
+
+  .hero-palm-r img {
+    width: 100%;
+    height: auto;
+  }
+
+  /* 9. HAND NOTE */
+  .hero-hand-note {
+    position: absolute;
+    left: 47%;
+    top: 80%;
+    z-index: 9;
+    font-family: var(--font-script);
+    color: var(--gold-300);
+    font-size: clamp(1rem, 1.4vw, 1.5rem);
+    line-height: 1.15;
+    transform: rotate(-8deg);
+    display: flex;
+    flex-direction: column;
+    text-shadow: 0 0 16px rgba(249, 174, 85, 0.35);
+    pointer-events: none;
+    animation: fadeInHello 0.8s ease 0.6s forwards;
+    opacity: 0;
+  }
+
+  /* 10. ROTATING BADGE */
+  .hero-badge-positioner {
+    position: absolute;
+    right: 4.5%;
+    top: 14%;
+    z-index: 10;
+    animation: fadeInHello 0.8s ease 0.5s forwards;
+    opacity: 0;
+  }
+
+  /* 6. LEFT INFO BLOCK */
+  .hero-info-block {
+    position: absolute;
+    left: 4.8%;
+    top: 65%;
+    z-index: 11;
+    max-width: clamp(260px, 28vw, 380px);
+    animation: fadeInHello 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+    opacity: 0;
+  }
+
+  .hero-role-label {
+    font-family: var(--font-sans);
+    font-size: clamp(0.72rem, 0.85vw, 0.95rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--cream-100);
+    line-height: 1.35;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+  }
+
+  .hero-description {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    font-weight: 400;
+    color: var(--cream-100);
+    line-height: 1.55;
+    margin-bottom: 20px;
+    max-width: 32ch;
+  }
+
+  .hero-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--grad-btn);
+    color: #FFF;
+    font-family: var(--font-sans);
+    font-size: var(--fs-label);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 14px 26px;
+    border-radius: var(--r-sm);
+    box-shadow: var(--btn-glow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .hero-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px rgba(240, 80, 90, 0.55);
+  }
+
+  .btn-icon-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .hero-cta-btn:hover .btn-icon-circle {
+    transform: translate(2px, -2px);
+    border-color: #FFF;
+  }
+
+  /* Bottom separator */
+  .hero-bottom-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    z-index: 12;
+  }
+
+  /* Responsive styling per Section 8 */
+  @media (max-width: 899px) {
+    .hero-section {
+      min-height: clamp(520px, 80vw, 750px);
+    }
+
+    .type-ariana {
+      font-size: clamp(4.5rem, 17vw, 9rem);
+    }
+
+    .hero-info-block {
+      top: auto;
+      bottom: 6%;
+      max-width: 44ch;
+      background: linear-gradient(180deg, transparent 0%, rgba(27, 12, 34, 0.85) 40%);
+      padding: 16px 20px 8px;
+      border-radius: var(--r-md);
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-subject-wrapper {
+      right: 0;
+      width: 52vw;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .hero-section {
+      min-height: 145vw;
+    }
+
+    .type-hello {
+      left: 6%;
+      top: 9%;
+      font-size: clamp(2.4rem, 11vw, 4rem);
+    }
+
+    .type-im-group {
+      left: 54%;
+      top: 10.5%;
+    }
+
+    .type-ariana {
+      left: 5%;
+      top: 19%;
+      font-size: clamp(3.8rem, 19vw, 6.5rem);
+    }
+
+    .type-vega {
+      left: 24%;
+      top: 32%;
+      font-size: clamp(3.2rem, 15vw, 5rem);
+    }
+
+    .hero-subject-wrapper {
+      width: 84%;
+      right: -6%;
+      bottom: 0;
+    }
+
+    .hero-badge-positioner {
+      right: 4%;
+      top: 8%;
+    }
+
+    .hero-hand-note {
+      display: none;
+    }
+
+    .hero-info-block {
+      left: 4%;
+      right: 4%;
+      bottom: 4%;
+      max-width: 100%;
+      background: linear-gradient(180deg, transparent 0%, rgba(27, 12, 34, 0.92) 25%);
+      padding: 20px 16px 12px;
+    }
+
+    .hero-description {
+      font-size: 0.9rem;
+    }
+  }
+</style>

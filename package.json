@@ -1,0 +1,23 @@
+{
+  "name": "ariana-vega-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev --port 3000 --host 0.0.0.0",
+    "start": "astro dev --port 3000 --host 0.0.0.0",
+    "build": "astro build",
+    "preview": "astro preview --port 3000 --host 0.0.0.0",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource-variable/jost": "^5.2.5",
+    "@fontsource/anton": "^5.2.5",
+    "@fontsource/bodoni-moda": "^5.2.5",
+    "@fontsource/yellowtail": "^5.2.5",
+    "astro": "^5.4.2",
+    "sharp": "^0.33.5",
+    "typescript": "^5.7.3"
+  }
+}

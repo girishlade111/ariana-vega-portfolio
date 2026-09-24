@@ -1,0 +1,46 @@
+---
+import Sparkle from './Sparkle.astro';
+
+interface Props {
+  title: string;
+  id?: string;
+  class?: string;
+}
+
+const { title, id, class: className = '' } = Astro.props;
+---
+
+<div class={`section-heading-wrapper ${className}`}>
+  <h2 id={id} class="section-title">
+    <Sparkle size={13} color="var(--orange-400)" />
+    <span class="title-text">{title}</span>
+    <Sparkle size={13} color="var(--orange-400)" />
+  </h2>
+</div>
+
+<style>
+  .section-heading-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: clamp(20px, 2.5vw, 36px);
+  }
+
+  .section-title {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(10px, 1.2vw, 18px);
+    font-family: var(--font-sans);
+    font-size: var(--fs-label);
+    font-weight: 500;
+    color: var(--orange-400);
+    text-transform: uppercase;
+    letter-spacing: 0.38em;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .title-text {
+    padding-top: 1px;
+  }
+</style>

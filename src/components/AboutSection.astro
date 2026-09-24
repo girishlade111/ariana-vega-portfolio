@@ -1,0 +1,260 @@
+---
+import { Image } from 'astro:assets';
+import { siteData } from '../data/site.ts';
+import StatItem from './StatItem.astro';
+import Icon from './Icon.astro';
+
+import aboutPortraitImg from '../assets/about/about-portrait.jpg';
+import quoteSkyImg from '../assets/about/quote-sky.jpg';
+---
+
+<section id="about" class="about-section" aria-labelledby="about-heading">
+  <div class="site-container">
+    <div class="about-grid">
+      <!-- 1. Left: Portrait -->
+      <div class="about-portrait-card" data-reveal style="--i: 0;">
+        <Image 
+          src={aboutPortraitImg} 
+          alt="Ariana Vega smiling in tropical sunset" 
+          width={900} 
+          height={1100} 
+          loading="lazy"
+          class="portrait-img"
+        />
+      </div>
+
+      <!-- 2. Middle: Content & Stats -->
+      <div class="about-content-card" data-reveal style="--i: 1;">
+        <div class="about-title-group" id="about-heading">
+          <span class="about-script">About</span>
+          <h2 class="about-me">ME</h2>
+        </div>
+
+        <p class="about-bio">
+          {siteData.about}
+        </p>
+
+        <div class="about-stats-row">
+          {siteData.stats.map((stat, idx) => (
+            <StatItem 
+              value={stat.value}
+              label={stat.label}
+              icon={stat.icon}
+              showDivider={idx < siteData.stats.length - 1}
+            />
+          ))}
+        </div>
+      </div>
+
+      <!-- 3. Right: Quote Sky Card -->
+      <div class="about-quote-card" data-reveal style="--i: 2;">
+        <div class="quote-bg-wrapper">
+          <Image 
+            src={quoteSkyImg} 
+            alt="Dramatic sunset sky clouds with palms" 
+            width={800} 
+            height={1000} 
+            loading="lazy"
+            class="quote-bg-img"
+          />
+          <div class="quote-overlay" aria-hidden="true"></div>
+        </div>
+
+        <div class="quote-inner-content">
+          <div class="quote-mark-icon" aria-hidden="true">
+            <Icon name="quote-mark" size={32} color="var(--coral-500)" />
+          </div>
+
+          <blockquote class="quote-text">
+            "{siteData.quote}"
+          </blockquote>
+
+          <div class="quote-hand-arrow" aria-hidden="true">
+            <Icon name="hand-arrow" size={54} color="var(--gold-300)" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-section {
+    padding-block: clamp(36px, 5vw, 80px);
+    scroll-margin-top: 40px;
+    position: relative;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 33fr 29fr 26fr;
+    gap: 2.5%;
+    align-items: stretch;
+  }
+
+  /* 1. Left: Portrait */
+  .about-portrait-card {
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    aspect-ratio: 241 / 213;
+    background: var(--plum-900);
+    border: 1px solid rgba(245, 133, 90, 0.15);
+  }
+
+  .portrait-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* 2. Middle: Content */
+  .about-content-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(8px, 1vw, 16px) 0;
+  }
+
+  .about-title-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+  }
+
+  .about-script {
+    font-family: var(--font-script);
+    font-size: var(--fs-about-script);
+    background: linear-gradient(135deg, var(--gold-300) 0%, var(--coral-500) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    display: inline-block;
+  }
+
+  .about-me {
+    font-family: var(--font-serif);
+    font-size: var(--fs-me);
+    font-weight: 700;
+    color: var(--coral-500);
+    line-height: 0.8;
+    margin: -0.35em 0 0 30%;
+    text-transform: uppercase;
+  }
+
+  .about-bio {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    font-weight: 400;
+    color: var(--cream-100);
+    line-height: 1.6;
+    margin-bottom: 24px;
+    max-width: 38ch;
+  }
+
+  .about-stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--plum-800);
+    border: 1px solid rgba(245, 133, 90, 0.2);
+    border-radius: var(--r-md);
+    padding: 16px 8px;
+    margin-top: auto;
+  }
+
+  /* 3. Right: Quote Card */
+  .about-quote-card {
+    position: relative;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    aspect-ratio: 188 / 200;
+    border: 1px solid rgba(245, 133, 90, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .quote-bg-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .quote-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .quote-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(27, 12, 34, 0.25) 0%, rgba(27, 12, 34, 0.75) 100%);
+  }
+
+  .quote-inner-content {
+    position: relative;
+    z-index: 2;
+    padding: 10% 8% 8%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  .quote-mark-icon {
+    opacity: 0.95;
+    margin-bottom: 8px;
+  }
+
+  .quote-text {
+    font-family: var(--font-script);
+    font-size: clamp(1.2rem, 1.8vw, 1.85rem);
+    color: var(--gold-300);
+    line-height: 1.25;
+    transform: rotate(-4deg);
+    margin: 0;
+    text-shadow: 0 0 20px rgba(249, 174, 85, 0.35);
+  }
+
+  .quote-hand-arrow {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 12px;
+    opacity: 0.9;
+    transform: rotate(2deg);
+  }
+
+  /* Responsive styling per Section 8 */
+  @media (max-width: 899px) {
+    .about-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .about-quote-card {
+      grid-column: 1 / -1;
+      aspect-ratio: auto;
+      min-height: 240px;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .about-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .about-portrait-card {
+      width: 100%;
+      max-width: 360px;
+      margin-inline: auto;
+    }
+
+    .about-stats-row {
+      padding: 12px 4px;
+    }
+  }
+</style>

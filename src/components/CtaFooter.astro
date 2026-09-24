@@ -1,0 +1,303 @@
+---
+import { siteData } from '../data/site.ts';
+import Icon from './Icon.astro';
+import RotatingBadge from './RotatingBadge.astro';
+import palmTlImg from '../assets/hero/palm-tl.svg';
+---
+
+<footer id="contact" class="cta-footer-section" aria-labelledby="cta-heading">
+  <div class="site-container">
+    <div class="cta-slab" data-reveal>
+      <!-- Faint plum palm silhouette at bottom-left -->
+      <div class="cta-palm-silhouette" aria-hidden="true">
+        <img src={palmTlImg.src} alt="" width="360" height="360" />
+      </div>
+
+      <div class="cta-grid">
+        <!-- Col 1: Big Creative Title -->
+        <div class="cta-col-title">
+          <span class="cta-label">{siteData.cta.headingPart1}</span>
+          <div class="cta-heading-group">
+            <h2 id="cta-heading" class="cta-something">{siteData.cta.headingPart2}</h2>
+            <span class="cta-amazing">{siteData.cta.headingPart3}</span>
+          </div>
+        </div>
+
+        <!-- Col 2: Paragraph + Connect Button -->
+        <div class="cta-col-action">
+          <p class="cta-description">
+            {siteData.cta.description}
+          </p>
+          <a href={siteData.cta.buttonHref} class="cta-connect-btn">
+            <span>{siteData.cta.buttonText}</span>
+            <Icon name="arrow-up-right" size={16} color="#FFF" />
+          </a>
+        </div>
+
+        <!-- Col 3: Contact List -->
+        <div class="cta-col-contact">
+          <ul class="contact-list">
+            <li class="contact-item">
+              <span class="contact-icon" aria-hidden="true">
+                <Icon name="mail" size={16} color="var(--cream-100)" />
+              </span>
+              <a href={`mailto:${siteData.contact.email}`} class="contact-link">
+                {siteData.contact.email}
+              </a>
+            </li>
+            <li class="contact-item">
+              <span class="contact-icon" aria-hidden="true">
+                <Icon name="globe" size={16} color="var(--cream-100)" />
+              </span>
+              <a href={`https://${siteData.contact.website}`} target="_blank" rel="noopener noreferrer" class="contact-link">
+                {siteData.contact.website}
+              </a>
+            </li>
+            <li class="contact-item">
+              <span class="contact-icon" aria-hidden="true">
+                <Icon name="instagram" size={16} color="var(--cream-100)" />
+              </span>
+              <a href={`https://instagram.com/${siteData.contact.instagram.replace('@', '')}`} target="_blank" rel="noopener noreferrer" class="contact-link">
+                {siteData.contact.instagram}
+              </a>
+            </li>
+            <li class="contact-item">
+              <span class="contact-icon" aria-hidden="true">
+                <Icon name="map-pin" size={16} color="var(--cream-100)" />
+              </span>
+              <span class="contact-text">
+                {siteData.contact.location}
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Rotating Circular Badge -->
+        <div class="cta-col-badge">
+          <RotatingBadge 
+            text={siteData.footerBadgeText} 
+            duration={20} 
+            centerIcon="starburst-center" 
+            size="clamp(90px, 11vw, 130px)"
+            id="footer-badge"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .cta-footer-section {
+    padding-block: clamp(32px, 4vw, 64px) clamp(48px, 6vw, 80px);
+    scroll-margin-top: 40px;
+    position: relative;
+  }
+
+  .cta-slab {
+    position: relative;
+    background: var(--grad-cta);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+    padding: clamp(28px, 4%, 48px);
+    margin-inline: 0.8%;
+    min-height: clamp(200px, 16.5vw, 300px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Palm silhouette */
+  .cta-palm-silhouette {
+    position: absolute;
+    left: -40px;
+    bottom: -60px;
+    width: 320px;
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 1;
+    transform: rotate(20deg);
+  }
+
+  .cta-palm-silhouette img {
+    filter: brightness(0) saturate(100%) invert(8%) sepia(28%) saturate(1982%) hue-rotate(248deg) brightness(94%) contrast(97%);
+  }
+
+  .cta-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr 1.05fr auto;
+    gap: clamp(20px, 3vw, 40px);
+    align-items: center;
+  }
+
+  /* Col 1: Title */
+  .cta-col-title {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cta-label {
+    font-family: var(--font-sans);
+    font-size: var(--fs-label);
+    font-weight: 500;
+    color: var(--cream-100);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .cta-heading-group {
+    position: relative;
+  }
+
+  .cta-something {
+    font-family: var(--font-serif);
+    font-size: var(--fs-cta-big);
+    font-weight: 700;
+    color: rgba(255, 222, 190, 0.82);
+    text-transform: uppercase;
+    line-height: 0.85;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .cta-amazing {
+    font-family: var(--font-script);
+    font-size: clamp(2.2rem, 4.5vw, 4.2rem);
+    color: var(--gold-300);
+    transform: rotate(-6deg);
+    position: absolute;
+    right: -10px;
+    bottom: -0.35em;
+    text-shadow: 0 0 25px rgba(249, 174, 85, 0.45);
+    white-space: nowrap;
+  }
+
+  /* Col 2: Action */
+  .cta-col-action {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: flex-start;
+  }
+
+  .cta-description {
+    font-family: var(--font-sans);
+    font-size: clamp(14px, 1vw, 16px);
+    font-weight: 400;
+    color: #FFF;
+    line-height: 1.5;
+    max-width: 26ch;
+    margin: 0;
+  }
+
+  .cta-connect-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--orange-400);
+    color: #FFF;
+    font-family: var(--font-sans);
+    font-size: var(--fs-label);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 12px 24px;
+    border-radius: var(--r-sm);
+    transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .cta-connect-btn:hover {
+    transform: translateY(-2px);
+    background: #FA9A60;
+    box-shadow: 0 8px 24px rgba(245, 138, 75, 0.4);
+  }
+
+  /* Col 3: Contact List */
+  .contact-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-sans);
+    font-size: clamp(13px, 0.9vw, 15px);
+    color: var(--cream-100);
+  }
+
+  .contact-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    opacity: 0.9;
+  }
+
+  .contact-link {
+    color: var(--cream-100);
+    text-decoration: none;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+  }
+
+  .contact-link:hover {
+    color: #FFF;
+    text-decoration: underline;
+  }
+
+  .contact-text {
+    color: var(--cream-100);
+  }
+
+  /* Col 4: Badge */
+  .cta-col-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Responsive styling per Section 8 */
+  @media (max-width: 899px) {
+    .cta-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .cta-col-badge {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 599px) {
+    .cta-slab {
+      margin-inline: 0;
+      padding: 32px 20px;
+    }
+
+    .cta-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .cta-amazing {
+      position: static;
+      display: block;
+      margin-top: -10px;
+      margin-bottom: 8px;
+    }
+
+    .cta-col-badge {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      transform: scale(0.85);
+    }
+  }
+</style>

@@ -1,0 +1,7 @@
+{
+  "name": "Ariana Vega — Portfolio",
+  "description": "Pixel-faithful clone of Ariana Vega's creative portfolio website in pure Astro",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

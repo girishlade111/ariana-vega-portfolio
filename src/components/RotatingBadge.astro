@@ -1,0 +1,90 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  text: string;
+  duration?: number; // seconds
+  centerIcon?: 'sun-center' | 'starburst-center';
+  size?: number | string;
+  id?: string;
+  class?: string;
+}
+
+const {
+  text,
+  duration = 25,
+  centerIcon = 'sun-center',
+  size = 120,
+  id = `badge-${Math.random().toString(36).substring(2, 9)}`,
+  class: className = ''
+} = Astro.props;
+
+const pixelSize = typeof size === 'number' ? `${size}px` : size;
+---
+
+<div class={`rotating-badge-container ${className}`} style={`--badge-size: ${pixelSize}; --spin-duration: ${duration}s;`} aria-hidden="true">
+  <div class="rotating-ring">
+    <svg viewBox="0 0 100 100" width="100%" height="100%">
+      <defs>
+        <path
+          id={id}
+          d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
+          fill="none"
+        />
+      </defs>
+      <text fill="var(--cream-100)" font-family="var(--font-sans)" font-size="8.8" font-weight="500" letter-spacing="0.22em">
+        <textPath href={`#${id}`} startOffset="0%">
+          {text}
+        </textPath>
+      </text>
+    </svg>
+  </div>
+  <div class="badge-center-icon">
+    <Icon name={centerIcon} size={28} color="var(--gold-300)" />
+  </div>
+</div>
+
+<style>
+  .rotating-badge-container {
+    position: relative;
+    width: var(--badge-size);
+    height: var(--badge-size);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .rotating-ring {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    animation: spinRing var(--spin-duration) linear infinite;
+    transform-origin: center center;
+  }
+
+  .badge-center-icon {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @keyframes spinRing {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rotating-ring {
+      animation: none;
+    }
+  }
+</style>
