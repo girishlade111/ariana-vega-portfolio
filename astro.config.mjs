@@ -3,7 +3,9 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://arianavega.design',
+  // GitHub Pages project site — absolute asset paths are prefixed with base
+  site: 'https://girishlade111.github.io/ariana-vega-portfolio',
+  base: '/ariana-vega-portfolio',
   output: 'static',
   integrations: [sitemap()],
   server: {
