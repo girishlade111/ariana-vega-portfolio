@@ -253,3 +253,7 @@ vercel --prod
 ## License
 
 Provided as-is for portfolio/demo purposes. All artwork and copy are fictional and created for this clone.
+
+---
+
+**Built by Girish Lade** — [ladestack.in](https://ladestack.in)
